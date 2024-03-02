@@ -1,0 +1,39 @@
+234. Palindrome Linked List
+
+
+
+
+BRUTE FORCE BY USING STACK>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+       
+        if(head==null || head.next==null) return true;
+          ListNode temp=head;
+        Stack<Integer> st=new Stack<>();
+        while(temp!=null){
+            st.add(temp.val);
+            temp=temp.next;
+        }
+
+        temp=head;
+        while(temp!=null){
+            if(temp.val!=st.pop()) return false;
+            temp=temp.next;
+        }    
+        return true;
+    }
+}
+
+
+TC =O(2N)     SC=O(N)
+
+
+
+
+
+
+
+
+
+OPTIMAL BY USING ITERETIVE METHOD>>>>>>>>>>>>>>>>>>
