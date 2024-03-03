@@ -36,4 +36,43 @@ TC =O(2N)     SC=O(N)
 
 
 
-OPTIMAL BY USING ITERETIVE METHOD>>>>>>>>>>>>>>>>>>
+OPTIMAL BY USING TORTOISE AND HARE METHOD>>>>>>>>>>>>>>>>>>
+
+
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode fast=head;
+        ListNode slow=head;
+        while(fast.next!=null && fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+
+        ListNode newhead= reverse(slow.next);  //SET THE NEWHEAD AT THE LAST NODE
+        
+        ListNode first=head;
+        ListNode second=newhead;
+
+        while(second!=null){
+            if(first.val!=second.val){
+                reverse(head);  //BEFORE RETURNING JUST FIX THE ll
+                return false;
+            }
+            first=first.next;
+            second=second.next;
+        }
+        reverse(newhead);  //BEFORE RETURNING JUST FIX THE ll
+        return true;
+    }
+
+    public static ListNode reverse(ListNode node){
+      if(node==null || node.next==null) return node;
+      ListNode newhead=reverse(node.next);
+      ListNode front=node.next;
+      front.next=node;
+      node.next=null;
+
+      return newhead;
+    }
+}
+TC=O(2N)   SC=O(1)
