@@ -1,0 +1,121 @@
+160. Intersection of Two Linked Lists
+
+https://leetcode.com/problems/intersection-of-two-linked-lists/description/
+
+
+BRUTE FORCE>>>>>>>>>>>>>>>>>>>>>>>>>>>>> USING MAP
+
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA==null || headB==null) return null;
+        Map<ListNode, Integer> mpp=new HashMap<>();
+        ListNode temp=headA;
+        while(temp!=null){
+            mpp.put(temp, 1);
+            temp=temp.next;
+        }
+
+        temp=headB;
+        while(temp!=null){
+            if(mpp.containsKey(temp)){
+                return temp;
+            }
+            temp=temp.next;
+        }
+        return null;
+    }
+}
+
+
+TC= O(N1) + O(N2)
+
+SC=O(N1)
+
+
+BETTER >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> BY USING THE LENGTH OF THE TWO LINKEDLIST
+
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA==null || headB==null) return null;
+
+        //length of the Linkedlist 1
+        ListNode t1=headA;
+        int n1=0;
+        while(t1!=null){
+            n1++;
+            t1=t1.next;
+        }
+      //length of the Linkedlist 2
+        ListNode t2=headB;
+        int n2=0;
+        while(t2!=null){
+            n2++;
+            t2=t2.next;
+        }
+
+        //check which is greater
+        if(n1< n2){
+            return getCollisionPoint(headA, headB, n2-n1);
+        }
+        else{
+            return getCollisionPoint(headB, headA, n1-n2);
+        }
+
+    }
+
+
+    public static ListNode getCollisionPoint(ListNode small, ListNode large, int d){
+        while(d>0){
+            d--;
+            large=large.next;
+        }
+
+        while(small != large){
+            small=small.next;
+            large=large.next;
+        }
+        return small;
+    }
+}
+
+
+
+TC=O(N1) + O(2*N2)
+SC=O(1)
+
+
+
+
+
+OPTIMAL >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA==null || headB ==null) return null;
+
+        ListNode t1=headA;
+        ListNode t2=headB;
+
+        while(t1!=t2){
+            t1=t1.next;
+            t2=t2.next;
+
+            if(t1==t2) return t1;
+
+            if(t1==null) t1=headA;
+            if(t2== null) t2=headB;
+        }
+        return t1;
+    }
+}
+
+
+TC= O(N1 + N2 )
+SC=O(1)
+
+
+
