@@ -1,0 +1,83 @@
+Find length of Loop
+
+
+https://www.geeksforgeeks.org/problems/find-length-of-loop/1
+
+
+BRUTE FORCE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>HASHING
+
+
+class Solution
+{
+    //Function to find the length of a loop in the linked list.
+    static int countNodesinLoop(Node head)
+    {
+        if(head==null) return 0;
+        
+        Map<Node, Integer> mpp=new HashMap<>();
+        
+        int timer=1;
+        Node temp=head;
+        while(temp!=null){
+            if(mpp.containsKey(temp)){
+                int previous = mpp.get(temp);
+                return timer-previous;
+                
+            }
+            
+            mpp.put(temp, timer);
+            timer++;
+            
+            temp=temp.next;
+        }
+        return 0;
+    }
+}
+
+
+
+
+
+TC=0(N * 2)
+SC=O(N)
+
+
+
+
+
+OPTIMAL >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>USING TORTOISE AND HARE 
+
+
+class Solution
+{
+    //Function to find the length of a loop in the linked list.
+    static int countNodesinLoop(Node head)
+    {
+        Node slow=head;
+        Node fast=head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(slow==fast){
+                return findlength(slow, fast);
+            }
+        }
+        return 0;
+    }
+    
+    public static int findlength(Node slow, Node fast)
+    {
+        int cnt=1; 
+        fast=fast.next;
+        while(slow!=fast){
+            fast=fast.next;
+            cnt++;
+        }
+        return cnt;
+    }
+}
+
+
+
+Time Complexity (TC): O(N)
+Space Complexity (SC): O(1)
