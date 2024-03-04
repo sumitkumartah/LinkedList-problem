@@ -1,0 +1,56 @@
+142. Linked List Cycle II
+
+
+
+BRUTE FORCE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>HASHING
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head==null || head.next==null) return null;
+
+        Map<ListNode , Boolean> mpp=new HashMap<>();
+        ListNode temp=head;
+        while(temp!=null)
+        {
+           if(mpp.containsKey(temp))
+           {
+               return temp;
+           }
+
+           mpp.put(temp, true);
+
+           temp=temp.next;
+        }
+        return null;
+    }
+}
+
+
+OPTIMAL APPROACH >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BY USNING TORTOISE  AND HARE
+
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head==null || head.next==null) return null;
+
+        ListNode fast=head;
+        ListNode slow=head;
+
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+
+            if(slow==fast){
+                 slow=head;
+                 while(slow!= fast){
+                     slow=slow.next;
+                     fast=fast.next;
+                 }
+                 return slow;
+            }
+        }
+        return null;
+    }
+}
+
+
+Time Complexity (TC): O(N)
+Space Complexity (SC): O(1)
