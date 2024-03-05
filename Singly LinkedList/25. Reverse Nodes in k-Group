@@ -1,0 +1,71 @@
+25. Reverse Nodes in k-Group
+
+
+
+
+ 
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode temp=head;
+        ListNode prevnode=null; // set prevnode for join linkedlist
+        while(temp!=null)
+        {
+            ListNode knode= findkthNode(temp, k);  //find kth node 
+            if(knode ==null) // if i am not go to the kth node
+            {
+                if(prevnode!=null) //if there in the previous already nodes judt join  with the last
+                {
+                    prevnode.next=temp;
+                }
+                break; // suppose the linkedlist [1]->[2]-> null  and k=3  then just return the list
+            }
+
+            ListNode nextnode=knode.next; // set nextnode;
+            knode.next=null; // create linkedlist upto knode 
+
+            reverse(temp);   // reverse the ll upto knode
+
+            if(temp==head){// if it is the first partion then just move the head to the knode
+               head=knode;
+            }
+            else{
+                prevnode.next=knode;  // if there is prevnode just make connection
+            }
+            prevnode=temp; //set the prevnode
+            temp=nextnode; //move the temp to the nextnode
+        }
+        return head;
+    }
+
+     public ListNode findkthNode(ListNode temp, int k)
+    {
+        // fist k--;
+        k -= 1;
+
+        //in loop check 2 condition 
+        // 1. temp not null and 2. k > 0
+        while(temp != null && k > 0)
+        {
+            k--;
+            temp = temp.next;
+        }
+        return temp;
+    }
+
+     public ListNode reverse (ListNode head)
+    {
+        if(head == null || head.next == null) return head;
+
+        ListNode newHead = reverse(head.next);
+
+        ListNode front = head.next;
+        front.next = head;
+        head.next = null;
+
+    return newHead;
+    }
+}
+
+
+TC =O(2N) 
+SC=(1)
