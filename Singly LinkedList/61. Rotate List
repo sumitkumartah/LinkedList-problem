@@ -1,0 +1,39 @@
+61. Rotate List
+
+
+class Solution {
+   public ListNode rotateRight(ListNode head, int k) {
+    if (head == null || k == 0) return head; // Check for edge cases
+
+    ListNode tail = head;
+    int len = 1; // Start from 1 because head is not null
+    while (tail.next != null) {
+        len++;              
+        tail = tail.next;
+    }
+    k = k % len;
+    if (k == 0) return head; // No need to rotate if k is multiple of length
+
+    tail.next = head; // Make the list circular
+
+    ListNode newTail = head;
+    for (int i = 0; i < len - k - 1; i++) { // Move newTail to the correct position
+        newTail = newTail.next;
+    }
+    ListNode newHead = newTail.next; // New head is the next of newTail
+    newTail.next = null; // Break the circular list
+
+    return newHead;
+}
+
+
+    public static ListNode findnewtail(ListNode temp, int k)
+    {
+        while(temp!=null){
+            k--;
+            if(k==0) break;
+            temp=temp.next;
+        }
+        return temp;
+    }
+}
