@@ -1,0 +1,106 @@
+
+23. Merge k Sorted Lists
+
+
+BRUTE FORECE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> STORE IN A  ARRAYLIST THEN SORT THE ARRAYLIST THEN CONVERT INTO LIST AND RETURN THE HEAD
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        
+        List<Integer>arr=new ArrayList<>();
+        int n=lists.length;
+        for(int i=0;i<n;i++)
+        {
+            ListNode temp=lists[i];
+           while(temp!=null)
+           {
+               arr.add(temp.val);
+               temp=temp.next;
+           }
+        }
+
+        Collections.sort(arr);
+        ListNode head=arr2LL(arr);
+        return head;
+    }
+
+    
+    public ListNode arr2LL(List<Integer> arr) {
+        if (arr.isEmpty()) return null; //for handle null pointer exception
+
+        ListNode head = new ListNode(arr.get(0));
+        ListNode prev = head;
+
+        for (int i = 1; i < arr.size(); i++) {
+            ListNode temp = new ListNode(arr.get(i));
+            prev.next = temp;
+            prev = temp;
+        }
+
+        return head;
+    }
+    
+}
+
+
+TC = O(N* K ) + O(M LOG M) + O(M)
+SC=O(M) +O(M)
+
+
+
+
+
+BETTER APPROACH>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> BY USING MERGE 2 LINKEDLIST
+
+
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+          if (lists == null || lists.length == 0) { // at first i have to check list is null or not
+            return null;
+        }
+        
+        int n = lists.length;
+        ListNode head = lists[0];    //if i will not check list is null or not i can't take the head directly lists[0]
+        for (int i = 1; i < n; i++) {
+            head = merge2List(head, lists[i]);
+        }
+        return head;
+    
+    }
+
+    
+public ListNode merge2List(ListNode l1, ListNode l2)
+    {
+        if(l1==null && l2== null) return null;
+
+        ListNode dummynode =new ListNode(-1);
+        ListNode cur=dummynode;
+
+        while(l1!=null && l2!=null)
+        {
+            if(l1.val <=l2.val)
+            {
+                cur.next=l1;
+                cur=l1;
+                l1=l1.next;
+            }else{
+                cur.next=l2;
+                cur=l2;
+                l2=l2.next;
+            }
+        }
+
+        if(l1!=null)
+        {
+            cur.next=l1;
+            l1=l1.next;
+        }
+        else{
+            cur.next=l2;
+            l2=l2.next;
+        }
+        return dummynode.next;
+    }
+}
+
+
+
