@@ -1,0 +1,42 @@
+21. Merge Two Sorted Lists
+
+
+BRUTE ::
+
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        List<Integer> arr = new ArrayList<>();
+        if(list1==null && list2==null) return null;
+
+        while (list1 != null) {
+            arr.add(list1.val);
+            list1 = list1.next;
+        }
+        while (list2 != null) {
+            arr.add(list2.val);
+            list2 = list2.next;
+        }
+        Collections.sort(arr);
+        ListNode head = Arr2LL(arr);
+        return head;
+    }
+
+    public ListNode Arr2LL(List<Integer> arr) {
+        
+        ListNode head = new ListNode(arr.get(0));
+
+        ListNode prev = head;
+        for (int i = 1; i < arr.size(); i++) {
+            ListNode temp = new ListNode(arr.get(i));
+            prev.next = temp;
+            prev = temp;
+        }
+        return head;
+    }
+}
+
+
+TC= 0(N1) + O(N2) + O(N LOG N) + O(N)
+
+SC=O(N) + O(N)
