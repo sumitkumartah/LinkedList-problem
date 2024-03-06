@@ -1,0 +1,109 @@
+Flattening a Linked List
+
+https://www.geeksforgeeks.org/problems/flattening-a-linked-list/1
+
+
+
+BRUTE FORCE ::
+
+
+
+
+class GfG
+{
+     Node flatten(Node root) {
+        if(root == null) return null;   
+        List<Integer> arr = new ArrayList<>();
+        Node current = root;
+
+        while (current != null) {
+          Node temp=current;
+          while(temp!=null)   // at first go to bottom until bottom is null
+          {
+              arr.add(temp.data);
+              temp=temp.bottom;
+          }
+          
+          current=current.next;   //then go to next
+        }
+
+        Collections.sort(arr);
+        Node head = arr2LL(arr);
+        return head;
+    }
+
+
+
+    public Node arr2LL(List<Integer> arr) {
+        Node head = new Node(arr.get(0));
+        Node prev = head;
+
+        for (int i = 1; i < arr.size(); i++) {
+            Node temp = new Node(arr.get(i));
+            prev.bottom = temp;
+            prev = temp;
+        }
+
+        return head;
+    }
+}
+
+
+OPTIMAL>>>>>>>>>>>>>>>>>>>>>>>>>>>By using merge 2 list
+
+
+
+   
+class GfG
+{
+    Node flatten(Node root)
+    {
+	if (root == null || root.next == null) {
+            return root;
+        }
+
+        Node mergehead = flatten(root.next);
+        return merge2LL(root, mergehead);
+    }
+    
+    public  Node merge2LL(Node l1, Node l2)
+    {
+        if(l1==null && l2==null) return null;
+        Node dummynode= new Node (-1);
+        Node cur=dummynode;
+        while(l1!=null && l2!=null)
+        {
+            if(l1.data<= l2.data)
+            {
+                cur.bottom=l1;
+                cur=l1;
+                l1=l1.bottom;
+            }
+            else
+            {
+                cur.bottom=l2;
+                cur=l2;
+                l2=l2.bottom;
+            }
+        }
+        
+        if(l1!=null)
+        {
+            cur.bottom=l1;
+            l1=l1.bottom;
+        }
+        else{
+            cur.bottom =l2;
+            l2=l2.bottom;
+        }
+        return dummynode.bottom;
+    }
+}
+
+
+
+TC = O( 2NM)
+
+SC=O(N)
+
+
