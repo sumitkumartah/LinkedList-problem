@@ -1,0 +1,86 @@
+138. Copy List with Random Pointer
+
+
+
+BRUTE FORCE BY USING MAP>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if(head==null) return null;
+
+        Map<Node, Node> mpp=new HashMap<>();  // <orginal, copyOfOrginal> store in the map
+        Node temp=head;
+        while(temp!=null) //store in the map
+        {
+          mpp.put(temp, new Node(temp.val)); //store <orginal, copyOfOrginal> in the map
+          temp=temp.next;
+        }
+
+        temp=head;
+        while(temp!=null)
+        {
+            //at first create the copynode
+            Node copynewnode=mpp.get(temp);  // get the attach copyoforginal node in the map
+
+            //In the next of the copynewnode i have to attach the nextnode which actually connect to orginalnode next
+            copynewnode.next=mpp.get(temp.next); // get the copynode.next
+
+            //In the rendom of the copynewnode i have to attach the random node which actually connect to orginalnode-> random
+            copynewnode.random=mpp.get(temp.random);
+
+            temp=temp.next; //move to the nextnode
+        }
+        return mpp.get(head); // return the head of the Copy of orginalList by the reference of the orginallist head
+    }
+}
+
+TC=O(2n)
+SC=O(N)
+
+
+
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if (head == null) return null;
+        
+        Node temp = head;
+        
+        // Step 1: Insert copynode in between
+        while (temp != null) {
+            Node copynode = new Node(temp.val); // create a new copy node
+            copynode.next = temp.next;
+            temp.next = copynode;
+            temp = copynode.next;
+        }
+
+        // Step 2: Connect random with the copy node
+        temp = head;
+        while (temp != null) {
+            Node copynode = temp.next;
+            if (temp.random != null) {
+                copynode.random = temp.random.next;
+            } else {
+                copynode.random = null;
+            }
+            temp = copynode.next;
+        }
+
+        // Step 3: Create dummy node and connect with only copy node
+        temp = head;
+        Node dummyNode = new Node(-1);
+        Node cur = dummyNode;
+        while (temp != null) {
+            cur.next = temp.next;
+            temp.next = temp.next.next;
+            
+            cur = cur.next;
+            temp = temp.next;
+        }
+        
+        return dummyNode.next;
+    }
+}
+
+
