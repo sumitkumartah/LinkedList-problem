@@ -1,0 +1,153 @@
+148. Sort List
+
+
+
+BRUTE FORCE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if(head==null) return head;
+        List<Integer> arr=new ArrayList<>();
+        while(head!=null)
+        {
+            arr.add(head.val);
+            head=head.next;
+        }
+
+        Collections.sort(arr);
+        ListNode newhead=arr2LL(arr);
+
+        return newhead;
+    }
+
+    public static ListNode arr2LL(List<Integer> arr)
+    {
+        ListNode head=new ListNode(arr.get(0));
+        ListNode prev=head;
+        for(int i=1;i<arr.size();i++)
+        {
+            ListNode newnode=new ListNode(arr.get(i));
+            prev.next=newnode;
+            prev=newnode;
+        }
+        return head;
+    } 
+}
+
+TC= O(N) + (N LOG N) + (N)
+SC=O(N)
+
+
+
+
+OPTIMAL >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>BY USING MERGE SORT
+
+
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if(head==null || head.next==null) return head;
+
+        ListNode middle=findMiddle(head);
+
+        ListNode right=middle.next; // right list head
+
+        middle.next=null; // seperete two LL
+
+        ListNode left=head;// left list head
+        
+        left= sortList(left); // recurtion call for merge the list until go to null
+        right= sortList(right); //recurtion call for merge the list unlil node is not null
+
+        return mergeTwoLists(left, right); //merge 2 LL in sorted manner
+
+    }
+    
+    
+
+    public ListNode findMiddle(ListNode head) {
+        ListNode fast=head.next; // For odd index i have to take first middle 
+        ListNode slow=head;
+        while(fast!=null && fast.next!=null)
+        {
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+
+     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1==null && list2==null) return null;
+
+       ListNode dummynode= new ListNode (-1);
+       ListNode cur=dummynode;
+       while(list1!=null && list2!=null)
+       {
+           
+           if(list1.val <= list2.val)
+           {
+               cur.next=list1;
+               cur=list1;
+               list1=list1.next;
+           }
+           else{
+               cur.next=list2;
+               cur=list2;
+               list2=list2.next;
+           }
+         
+       }
+       if(list1!=null)
+       {
+           cur.next=list1;
+           list1=list1.next;
+       }else{
+           cur.next=list2;
+           list2=list2.next;
+       }
+
+       return dummynode.next;
+    }
+
+}
+
+TC =O(LOG N) + O(N) + O(N/2)
+SC=O(LOGN)
+
+
+
+
+ANOTHER APPROACH BY USING PRIORITY QUEUE>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+class Solution {
+    public ListNode sortList(ListNode head) {
+      if(head==null) return null;
+      PriorityQueue<Integer> pq=new PriorityQueue<>();
+      ListNode temp=head;
+
+      ListNode dummynode =new ListNode (-1);
+      ListNode cur=dummynode;
+      while(temp!=null)
+      {
+          pq.add(temp.val);
+          temp=temp.next;
+      }
+      while(!pq.isEmpty())
+      {
+        
+          ListNode newnode= new ListNode(pq.remove());
+          cur.next=newnode;
+          cur=cur.next;
+      }
+      return dummynode.next;
+    }
+}
+
+
+The while loop that iterates through the linked list and adds elements to the PriorityQueue takes O(N * log(N)) time, where N is the number of elements in the linked list.
+The while loop that removes elements from the PriorityQueue and creates a new ListNode for each element also takes O(N * log(N)) time.
+Overall, the time complexity is O(N * log(N)), where N is the number of elements in the linked list.
+
+The space complexity is O(N) due to the PriorityQueue and the ListNode.
