@@ -90,7 +90,27 @@ class Main {
    return head;
  }
 
+//or (with one ptr)
+ public static Node deleteKth(Node head, int k){
+        if(k==1){
+            return head.next;
+        }
+        Node temp=head;
+        while(temp.next!=null){
+             
+             k--;
+            if(k==1){
+                break;
+            }
+           temp=temp.next;
+        }
+        temp.next=temp.next.next;
+        return head;
+    }
 
+
+    
+    
     
 //delete the particular el of the LL 
     public static Node Deleteparticular(Node head, int el) {
@@ -118,7 +138,27 @@ class Main {
    return head;
   }
 
+    //or with one ptr)
+ public static Node deletevalue(Node head, int el){
+        if(head.data==el){
+            head=head.next;
+            return head;
+        }
+        Node temp=head;
+        while(temp.next!=null){
+            if(temp.next.data==el){
+                break;
+            }
+           temp=temp.next;
+        }
+        temp.next=temp.next.next;
+        return head;
+    }
 
+
+
+
+    
 //delete the before  particular el of the LL 
     public static Node DeleteBeforeparticular(Node head, int el) {
     if(head==null){
@@ -144,8 +184,29 @@ class Main {
    }
    return head;
   }
+    //OR
+ public static Node deleteBefore(Node head, int el){
+        if(head.next.data==el){
+            head=head.next;
+            return head;
+        }
+        Node temp=head;
+        while(temp.next.next!=null){
+            if(temp.next.next.data==el){
+                break;
+            }
+           temp=temp.next;
+        }
+        temp.next=temp.next.next;
+        return head;
+    }
 
 
+
+
+
+
+    
  //delete the after  particular el of the LL 
     public static Node DeleteAfterparticular(Node head, int el) {
     if(head==null){
@@ -165,10 +226,40 @@ class Main {
    return head;
   }
 
+ // or
+    public static Node deleteAfter(Node head, int el){
+        if(head==null) return null;
+        if(head.data==el){
+            head=head.next.next;
+            return head;
+        }
+        Node temp=head;
+        while(temp.next!=null){
+            if(temp.data==el){
+                break;
+            }
+           temp=temp.next;
+        }
+        if(temp.next==null) return head;
+        else{
+             temp.next=temp.next.next;
+        }
+       
+        return head;
+    }
 
+    
 
     // main function
     public static void main(String args[]) {
+        // Scanner sc=new Scanner(System.in);
+        // int n=sc.nextInt();
+        
+        // int arr[]=new int[n];
+        // for(int i=0;i<n;i++){
+        //     arr[i]=sc.nextInt();
+        // }
+        
         int arr[] = { 12, 5, 3, 6, 7, 2, 8, 1 };
         Node head = Arr2LL(arr);
         
