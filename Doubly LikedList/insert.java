@@ -130,20 +130,23 @@ class Main{
 
 //insert before a given node el 
  
-  private static Node insertBefore(Node head, int el, int val ) {
-    Node temp = head;
-    while (temp!= null) {
-        
-        if(temp.data==el) break;
-        temp = temp.next;
-    }
-    Node prev=temp.back;
-    Node newnode = new Node(val,temp,prev);
-    prev.next = newnode;
-    newnode.next=temp;
 
-    return head;
-}
+    public static Node insertBefore(Node head, int el, int val){
+        if(head.data==el){
+             return insertStart(head, val);
+        }
+        Node temp=head;
+        while(temp.next!=null){
+           if(temp.data==el) break;
+            temp=temp.next;
+        }
+        if(temp.data!=el )return head;
+        Node prev=temp.back;
+        Node newNode= new Node(val,temp, prev);
+        prev.next=newNode;
+        temp.back=newNode;
+        return head;
+    }
 
 
 
@@ -165,20 +168,27 @@ class Main{
 
 
 //insert a val after a given node el
-private static Node insertAfter(Node head, int el, int val ) {
-    Node temp = head;
-    while (temp!= null) {
-        
-        if(temp.data==el) break;
-        temp = temp.next;
-    }
-    Node front=temp.next;
-    Node newnode = new Node(val,front,temp);
-    temp.next = newnode;
-    newnode.next=front;
 
-    return head;
-}
+    public static Node insertAfter(Node head, int el, int val){
+        
+        Node temp=head;
+        while(temp.next!=null){
+           if(temp.data==el) break;
+            temp=temp.next;
+        }
+        if(temp==null || temp.data!=el){
+            return head;
+        }
+        
+        Node front=temp.next;
+        if(front==null){
+            return insertEnd(head, val);
+        }
+        Node newNode= new Node(val,front, temp);
+        temp.next=newNode;
+        front.back=newNode;
+        return head;
+    }
 
 
 
