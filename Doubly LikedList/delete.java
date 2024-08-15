@@ -199,10 +199,35 @@ private static Node deleteBefore(Node head, int el) {
     return head;
     
 }
+//            OR
+//delete before the given node 
+     public static Node deleteNode(Node head, int x){
+         if(head.data==x) return head;
+        Node temp=head;
+     
+        while(temp.next!=null){
+           if(temp.next.data==x){
+               break;
+           }
+            temp=temp.next;
+        }
+       
+      
+      Node prev=temp.back;
+      Node front=temp.next;
+       
+      if(prev==null) return deleteHead(head);
+       
+      prev.next=front;
+      front.back=prev;
+      temp.back=null;
+      temp.next=null;
+      return head;
+    }
 
 
 
-
+ 
     //main function
     public static void main(String args[]) {
         int arr[] = {2, 4, 8, 7, 1, 9, 5, 3};
