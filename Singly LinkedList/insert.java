@@ -93,24 +93,31 @@ class Main {
     }
 
 //insert before the  el x
-  public static Node insertBefore(Node head, int el, int val)
-    {
-      if(head==null) return new Node(val); 
-      Node temp=head;
-      while(temp!=null)
-      {
-       if(temp.next.data==el)
-        {
-         Node newnode=new Node(val);
-         newnode.next=temp.next;
-         temp.next=newnode;
-         break;
-        }
-       temp=temp.next;
-      }
-      return head;
+public static Node insertBefore(Node head, int tar, int val){
+       if(head==null){
+               return null;
+       }
+       
+       if(head.data==tar){
+           Node newHead=insertHead(head, val);
+           return newHead;
+       }
+       
+       Node temp=head;
+       while(temp!=null){
+           if(temp.next.data==tar){
+               Node newnode=new Node(val);
+               newnode.next=temp.next;
+               temp.next=newnode;
+               break;
+           }
+           
+           temp=temp.next;
+       }
+       return head;
     }
 
+    
     
    //insert after the  el x
   public static Node insertAfter(Node head, int el, int val)
