@@ -64,26 +64,33 @@ class Main {
 
    
 //insert at the kth position
-  public static Node insertAtK(Node head, int k, int val)
-    {
-      if(head==null) return new Node(val); 
-      int cnt=0;    
-      Node temp=head;
-      while(temp!=null)
-      {
-       cnt++;
-       if(cnt==k-1)
-        {
-         Node newnode=new Node(val);
-         newnode.next=temp.next;
-         temp.next=newnode;
-         break;
-        }
-       temp=temp.next;
-      }
-      return head;
+   public static Node insertK(Node head, int k, int val){
+       if(head==null){
+           if(k==0) return new Node(val);
+           else{
+               return null;
+           }
+       }
+       
+       if(k==0){
+           Node newHead=insertHead(head, val);
+           return newHead;
+       }
+       
+       int cnt=1;
+       Node temp=head;
+       while(temp!=null){
+           if(cnt==k){
+               Node newnode=new Node(val);
+               newnode.next=temp.next;
+               temp.next=newnode;
+               break;
+           }
+           cnt++;
+           temp=temp.next;
+       }
+       return head;
     }
-
 
 //insert before the  el x
   public static Node insertBefore(Node head, int el, int val)
